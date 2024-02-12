@@ -11,7 +11,9 @@ function App() {
   const [neutral, setNeutral] = useState(0);
   const [bad, setBad] = useState(0);
 
-  const total = countTotalFeedback(good, neutral, bad);
+  const feedback = { good, neutral, bad };
+
+  const total = countTotalFeedback(feedback);
   const positivePercentage = countPositiveFeedback(good, total);
 
   const handleFeedback = (e) => {
@@ -29,15 +31,15 @@ function App() {
   };
 
   return (
-    <>
-      <Section title="Please leave feedback">
+    <div className=" w-1/5 mx-auto text-center py-10">
+      <Section title="Please leave feedback" className="">
         <FeedbackOptions
-          options={['good', 'neutral', 'bad']}
+          options={Object.keys(feedback)}
           onLeaveFeedback={handleFeedback}
         />
       </Section>
       {total < 1 ? (
-        <Notification message="There is no feedback" />
+        <Notification message="No feedback yet" />
       ) : (
         <Section title="Statistics">
           <Statistics
@@ -49,7 +51,7 @@ function App() {
           />
         </Section>
       )}
-    </>
+    </div>
   );
 }
 
